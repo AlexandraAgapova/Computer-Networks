@@ -7,10 +7,7 @@ from sqlalchemy import create_engine, Column, Integer, String
 from sqlalchemy.ext.declarative import declarative_base
 from sqlalchemy.orm import sessionmaker
 
-# http://127.0.0.1:8000/parse?url=http://books.toscrape.com/catalogue/page-{}.html&limit=10
-# http://127.0.0.1:8000/books
-
-# --- Настройка базы данных ---
+# Configuring the database
 engine = create_engine("postgresql://alexandra:password@localhost:5432/mydatabase")
 Base = declarative_base()
 Session = sessionmaker(bind=engine)
@@ -25,10 +22,10 @@ class Book(Base):
 
 Base.metadata.create_all(engine)
 
-# --- Инициализация FastAPI ---
+# FastAPI initialization
 app = FastAPI()
 
-# --- Парсинг книг ---
+# Book Parsing
 def parse_books_from_site(base_url: str, page_limit: int = 1):
     options = webdriver.ChromeOptions()
     options.add_argument("--headless")
@@ -51,7 +48,7 @@ def parse_books_from_site(base_url: str, page_limit: int = 1):
     driver.quit()
     return books_data
 
-# --- API ручки ---
+# API Endpoint
 @app.get("/parse")
 def parse_endpoint(url: str = Query(..., description="URL-шаблон с {}"), limit: int = 1):
     books = parse_books_from_site(url, limit)
@@ -60,7 +57,7 @@ def parse_endpoint(url: str = Query(..., description="URL-шаблон с {}"), 
         db.add(Book(title=title, price=price, rating=rating, url=link))
     db.commit()
     db.close()
-    return {"message": f"Готово! Сохранили {len(books)} книг в базу."}
+    return {"message": f"Готово! Сохранено {len(books)} книг в базу."}
 
 @app.get("/books")
 def get_all_books():
