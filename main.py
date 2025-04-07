@@ -10,10 +10,10 @@ from webdriver_manager.chrome import ChromeDriverManager
 class BookParser:
     def __init__(self):
         options = Options()
-        options.add_argument("--headless")  # запуск без графического интерфейса
+        options.add_argument("--headless")  # launch without a graphical interface
         options.add_argument(
             "--disable-gpu"
-        )  # отключение использования видеокарты в Chrome
+        )  # disabling video card usage in Chrome
         options.add_argument(
             "user-agent=Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/132.0.0.0 YaBrowser/25.2.0.0 Safari/537.36"
         )
@@ -28,7 +28,7 @@ class BookParser:
     def loadPage(self, pageNumber):
         pageUrl = self.baseUrl.format(pageNumber)
         self.driver.get(pageUrl)
-        time.sleep(2)  # время на загрузку
+        time.sleep(2)  # download time
 
     def parsePage(self):
         books = self.driver.find_elements(By.CSS_SELECTOR, "article.product_pod")
