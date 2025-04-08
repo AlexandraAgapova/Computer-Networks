@@ -1,4 +1,5 @@
 import time
+
 from fastapi import FastAPI, Query
 from fastapi.responses import JSONResponse
 from selenium import webdriver
