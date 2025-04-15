@@ -6,14 +6,14 @@ Quick Start
 https://github.com/AlexandraAgapova/Computer-Networks.git
 cd Computer-Networks
 ```
-2. Stop nginx:
+2. Restart nginx:
 ```
 docker stop nginx
 docker rm nginx
 docker build -t my-nginx ./nginx
 docker run -d --name nginx --link fastapi -p 80:80 my-nginx
 ```
-3. Stop fastapi:
+3. Restart fastapi:
 ```
 docker stop fastapi
 docker rm fastapi
