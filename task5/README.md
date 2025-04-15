@@ -6,44 +6,23 @@ Quick Start
 https://github.com/AlexandraAgapova/Computer-Networks.git
 cd Computer-Networks
 ```
-2. Create a Docker network
+2. Stop nginx:
 ```
-docker network create app-network
+docker stop nginx
+docker rm nginx
+docker build -t my-nginx ./nginx
+docker run -d --name nginx --link fastapi -p 80:80 my-nginx
 ```
-3. Run PostgreSQL
+4. Build and run the app:
 ```
-docker run -d \
-  --name pg-db \
-  --network app-network \
-  -e POSTGRES_USER=alexandra \
-  -e POSTGRES_PASSWORD=password \
-  -e POSTGRES_DB=mydatabase \
-  -p 5433:5432 \
-  postgres:16
-```
-4. Build and run the FastAPI app
-```
-docker build -t my-fastapi-app .
-docker run -d \
-  --name fastapi-container \
-  --network app-network \
-  -p 8001:8001 \
-  my-fastapi-app
+./run.sh
 ```
 
-
-API Endpoints
-
-POST /parse
-Saves a URL to the database:
+5. Get url:
 ```
-curl -X POST "http://127.0.0.1:8001/parse?url=https://example.com"
+lt --port 80 --subdomain compnet2025
 ```
-
-GET /urls
-Returns all saved URLs:
+6. Get tunnel password:
 ```
-curl http://127.0.0.1:8001/urls
+curl https://loca.lt/mytunnelpassword
 ```
-
-Documentation: http://127.0.0.1:8001/docs
