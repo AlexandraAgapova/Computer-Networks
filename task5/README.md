@@ -13,7 +13,14 @@ docker rm nginx
 docker build -t my-nginx ./nginx
 docker run -d --name nginx --link fastapi -p 80:80 my-nginx
 ```
-4. Build and run the app:
+3. Stop fastapi:
+```
+docker stop fastapi
+docker rm fastapi
+docker build -t my-fastapi-app ./fastapi
+docker run -d --name fastapi --link pg-db my-fastapi-app
+```
+5. Build and run the app:
 ```
 ./run.sh
 ```
